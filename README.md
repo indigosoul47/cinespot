@@ -132,3 +132,17 @@ docker login -u <username>
 
 ## NGINX Reverse Proxy
 sudo apt install nginx
+
+docker inspect -f \
+'{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' \
+<container-id>
+
+Reference:
+https://www.freecodecamp.org/news/how-to-get-a-docker-container-ip-address-explained-with-examples/
+
+### Add config to site
+/etc/nginx/sites-available/default
+
+location / {
+    proxy_pass http://<docker-ip>:PORT
+}
