@@ -17,6 +17,10 @@ const librarySchema = mongoose.Schema({
     },
     comment: {
         type: String
+    },
+    added: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true

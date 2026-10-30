@@ -1,5 +1,8 @@
 import asyncHandler from 'express-async-handler';
 import Movie from '../models/movie.js';
+import mongoose from "mongoose";
+
+const ObjectId = mongoose.Types.ObjectId;
 
 const getRandTags = asyncHandler(async (req, res) => {
     const movies = await Movie.aggregate([{
@@ -62,6 +65,40 @@ const getMovies = asyncHandler(async (req, res) => {
             $match: { ...keyword}
         },
         {
+            $lookup: {
+                from: 'libraries',
+                localField: '_id',
+                foreignField: 'movie',
+                as: 'libraries'
+            }
+        },
+        {
+            $addFields: {
+                added: {
+                    $reduce: {
+                    input: '$libraries',
+                    initialValue: false,
+                    in: {
+                        $cond: [{
+                                $and: [ 
+                                    {$eq: [ "$$this.user", req.user && req.user._id ? ObjectId(req.user._id) : '' ]}, 
+                                    {$eq: [ "$$this.added", true ]} 
+                                ]  
+                            },
+                            true,
+                            '$$value'
+                        ]
+                    }
+                    }
+                }
+            }
+        },
+        {
+            $project: {
+                libraries: 0
+            }
+        },
+        {
             $skip: +pageSize * (page - 1)
         },{
             $limit: parseInt(pageSize)
@@ -105,6 +142,40 @@ const searchMovies = asyncHandler(async (req, res) => {
                 numCandidates: 100,
                 index: "vector_index",
                 limit: 10,
+            },
+        },
+        {
+            $lookup: {
+                from: 'libraries',
+                localField: '_id',
+                foreignField: 'movie',
+                as: 'libraries'
+            }
+        },
+        {
+            $addFields: {
+                added: {
+                    $reduce: {
+                    input: '$libraries',
+                    initialValue: false,
+                    in: {
+                        $cond: [{
+                                $and: [ 
+                                    {$eq: [ "$$this.user", req.user && req.user._id ? ObjectId(req.user._id) : '' ]}, 
+                                    {$eq: [ "$$this.added", true ]} 
+                                ]  
+                            },
+                            true,
+                            '$$value'
+                        ]
+                    }
+                    }
+                }
+            }
+        },
+        {
+            $project: {
+                libraries: 0
             }
         },
         {

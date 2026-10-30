@@ -56,17 +56,30 @@ const getLibraryById = asyncHandler(async (req, res) => {
 // TODO: verify created
 const createLibrary = asyncHandler(async (req, res) => {
     if(req.user){
+
         const {
             movie,
         } = req.body;
 
-        const library = new Library({
-            movie,
-            user: req.user
-        });
+        const exists = await Library.find({
+            user: req.user._id,
+            movie
+        })
 
-        const created = await library.save();
-        res.status(201).json({ library: created });
+        if(exists && exists.length > 0){
+            const library = new Library({
+                movie,
+                user: req.user,
+                added: true
+            });
+
+            const created = await library.save();
+            res.status(201).json({ library: created });
+
+        }else{
+            res.status(301);
+            throw new Error('Connection already exists');    
+        }
 
     }else{
         res.status(401);
