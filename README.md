@@ -1,6 +1,4 @@
-# e-shop
-
-
+# cinespot
 
 ## Getting started
 
