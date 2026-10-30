@@ -143,6 +143,29 @@ https://www.freecodecamp.org/news/how-to-get-a-docker-container-ip-address-expla
 ### Add config to site
 /etc/nginx/sites-available/default
 
-location / {
-    proxy_pass http://<docker-ip>:PORT
+server{
+    listen 80;
+    server_name: _;
+
+    <!-- location / {
+        proxy_pass http://<docker-ip>:PORT;
+    } -->
+
+    location / {
+        root /var/www/cineplex/client;
+        index index.html;
+        try_files $uri $url/ /index.html
+    }
+
+    location /api {
+        proxy_pass http://localhost:5000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded;
+    }
 }
+
+ln -s /etc/nginx/sites-available/cineplex /etc/nginx/sites-enabled
+
+systemctl reload nginx
