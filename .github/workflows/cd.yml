@@ -18,7 +18,7 @@ jobs:
     steps:
     - name: Pull Docker image
       run: echo $EC2_SSH_KEY | ssh -i /dev/stdin $EC2_USER@$EC2_HOST sudo docker pull xsh2047/cinespot:latest
-    - name: Remmove Stale Containers
+    - name: Remove Stale Containers
       run: echo $EC2_SSH_KEY | ssh -i /dev/stdin $EC2_USER@$EC2_HOST sudo docker rm -f cinespot-container || true
     - name: Run Latest Container
       run: echo $EC2_SSH_KEY | ssh -i /dev/stdin $EC2_USER@$EC2_HOST sudo docker run -d -p 5000:5000 --name cinespot-container xsh2047/cinespot 
