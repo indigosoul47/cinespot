@@ -88,3 +88,44 @@ For open source projects, say how it is licensed.
 
 ## Project status
 If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+
+# CI/CD
+
+### EC2-Setup
+sudo apt update
+
+sudo apt-get upgrade -y
+
+## Github-Runner
+# Create a folder
+$ mkdir actions-runner && cd actions-runnerCopied!# Download the latest runner package
+$ curl -o actions-runner-linux-x64-2.338.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.338.0/actions-runner-linux-x64-2.338.0.tar.gzCopied! # Optional: Validate the hash
+$ echo "af4b794c1bc41d73d40535e3fe092a39f9679cd8d965954c2aca25a05ca41d32  actions-runner-linux-x64-2.338.0.tar.gz" | shasum -a 256 -cCopied!# Extract the installer
+$ tar xzf ./actions-runner-linux-x64-2.338.0.tar.gz
+
+# Create the runner and start the configuration experience
+$ ./config.sh --url https://github.com/indigosoul47/cinespot --token BMIULPT6KEXKNV7HHMICGADK4SZPECopied!# Last step, run it!
+$ ./run.sh
+
+## Install Docker
+sudo apt update
+sudo apt install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Architectures: $(dpkg --print-architecture)
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+
+sudo apt update
+
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+## Login to Docker
+docker login -u <username>

@@ -1,0 +1,21 @@
+name: CD Action
+
+on:
+  workflow_run:
+    workflows: ['Docker CI']
+    types:
+      - completed
+    
+jobs:
+
+  build:
+
+    runs-on: self-hosted
+
+    steps:
+    - name: Pull Docker image
+      run: sudo docker pull xsh2047/cinespot:latest
+    - name: Remmove Stale Containers
+      run: sudo docker rm -f cinespot-container || true
+    - name: Run Latest Container
+      run: sudo docker run -d -p 5000:5000 --name cinespot-container xsh2047/cinespot 
