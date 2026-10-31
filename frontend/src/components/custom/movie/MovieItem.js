@@ -19,7 +19,7 @@ function MovieItem({movie}) {
         </span>
         <span className='movie-action'>
             {
-                !movie.added && (
+                movie.added ? '' : (
                     <button className='text-green-500' onClick={() => { 
                         dispatch(addLibrary({
                             movie: movie._id

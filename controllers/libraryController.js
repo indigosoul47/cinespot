@@ -78,18 +78,21 @@ const createLibrary = asyncHandler(async (req, res) => {
             movie,
         } = req.body;
 
-        console.log('Create', movie)
-
         const exist = await Library.find({
             user: req.user._id,
             movie: ObjectId(movie)
         })
 
-        console.log('Exi', exist)
-
         if(exist && exist.length > 0){
-            res.status(301);
-            throw new Error('Connection already exists');
+            if(!exist[0].added){
+                const refresh = await Library.findById(exist[0]._id);
+                refresh.added = true;
+                res.json(await refresh.save());
+            }else{
+                res.status(301);
+                throw new Error('Connection already exists');
+            }
+            
         }else{
             const library = new Library({
                 movie,
