@@ -1,5 +1,8 @@
 import asyncHandler from 'express-async-handler';
 import Library from '../models/library.js';
+import mongoose from "mongoose";
+
+const ObjectId = mongoose.Types.ObjectId;
 
 // TODO: Retrive for user
 const getLibraries = asyncHandler(async (req, res) => {
@@ -22,10 +25,24 @@ const getLibraries = asyncHandler(async (req, res) => {
         }
     }
 
+    if(req.user){
+        keyword.user = ObjectId(req.user._id);
+    }
+
     const libraries = await Library.aggregate([ 
         {
-            $match: { ...keyword}
+            $match: { ...keyword, added: true },
         },
+        {
+            $lookup: {
+                from: 'movies',
+                localField: 'movie',
+                foreignField: '_id',
+                as: 'movie'
+            }
+        },{
+            $unwind: '$movie'
+        },  
         {
             $limit: parseInt(pageSize)
         },
@@ -61,24 +78,27 @@ const createLibrary = asyncHandler(async (req, res) => {
             movie,
         } = req.body;
 
-        const exists = await Library.find({
+        console.log('Create', movie)
+
+        const exist = await Library.find({
             user: req.user._id,
-            movie
+            movie: ObjectId(movie)
         })
 
-        if(exists && exists.length > 0){
+        console.log('Exi', exist)
+
+        if(exist && exist.length > 0){
+            res.status(301);
+            throw new Error('Connection already exists');
+        }else{
             const library = new Library({
                 movie,
-                user: req.user,
+                user: req.user._id,
                 added: true
             });
 
             const created = await library.save();
-            res.status(201).json({ library: created });
-
-        }else{
-            res.status(301);
-            throw new Error('Connection already exists');    
+            res.status(201).json({ library: created });    
         }
 
     }else{
@@ -96,7 +116,7 @@ const updateLibrary = asyncHandler(async (req, res) => {
     const library = await Library.findById(req.params.id);
 
     if(library){
-        if(library.user === req.user){
+        if(library.user.equals(req.user._id)){
             if(rating){
                 library.rating = rating;
             }
@@ -120,9 +140,9 @@ const deleteLibrary = asyncHandler(async (req, res) => {
     const library = await Library.findById(req.params.id);
 
     if(library){
-        if(library.user === req.user){
-            await library.remove();
-            res.json({ message: 'Library removed successfully' });
+        if(library.user.equals(req.user._id)){
+            library.added = false;
+            res.json(await library.save());
         }else{
             res.status(401);
             throw new Error('Invalid Permission: User');

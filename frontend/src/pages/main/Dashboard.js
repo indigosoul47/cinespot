@@ -10,12 +10,13 @@ import { createMovie, deleteMovie, fetchMovie, fetchMovies, updateMovie } from '
 import { MOVIE_RESET_REQUEST } from '../../store/constants/movieConstants';
 import { usePopper } from 'react-popper';
 import Tooltip from '../../components/main/Tooltip';
+import { fetchLibraries, deleteLibrary } from '../../store/actions/libraryActions';
 
 const Dashboard = () => {
     const dispatch = useDispatch();
 
     const { users, loading: usersLoading } = useSelector(state => state.admin.user);
-    const { movies, movie, loading: moviesLoading } = useSelector(state => state.movies);
+    const { libraries, library, loading: librariesLoading } = useSelector(state => state.libraries);
     
     let [referenceElement, setReferenceElement] = useState()
     let [popperElement, setPopperElement] = useState()
@@ -23,7 +24,7 @@ const Dashboard = () => {
 
     useEffect(() => {
       dispatch(fetchUsers());
-      dispatch(fetchMovies('', '', '0'));
+      dispatch(fetchLibraries('', '', '0'));
     }, [dispatch]);
 
     const loading = false;
@@ -137,18 +138,18 @@ const Dashboard = () => {
                       }}>
                         <span className='mb-4'><Search main={false} placeholder="Search Movie" /></span>
                         {
-                          moviesLoading ? <Loading /> : (
-                            movies && movies.length > 0 ?
-                              movies.map((movie, idx) => (
+                          librariesLoading ? <Loading /> : (
+                            libraries && libraries.length > 0 ?
+                              libraries.map((library, idx) => (
                                 <div className='w-full flex justify-between items-center my-8' key={idx}>
-                                  <img src={`${movie.images[0]}`} alt='user_img' className='h-12 w-12 rounded'/>
-                                  <span><Link to={`/movie/${movie._id}`}>{ movie.name }</Link></span>
-                                  <div className='movie-actions flex'>
+                                  <img src={`${library.movie.images[0]}`} alt='user_img' className='h-12 w-12 rounded'/>
+                                  <span><Link to={`/movie/${library.movie._id}`}>{ library.movie.name }</Link></span>
+                                  <div className='library-actions flex'>
                                     <span className='mx-4'>
                                       <Tooltip content={
                                         <div className='flex flex-col w-max'>
-                                          <span className='flex'>{`Genre: ${ movie.genre }`}</span>
-                                          <span className='flex'>Tags: { (movie.tags && movie.tags.filter(tag => tag.trim() !== '').length > 0) ? movie.tags.map((tag, idx) => {
+                                          <span className='flex'>{`Genre: ${ library.movie.genre }`}</span>
+                                          <span className='flex'>Tags: { (library.movie.tags && library.movie.tags.filter(tag => tag.trim() !== '').length > 0) ? library.movie.tags.map((tag, idx) => {
                                             return <span className='mx-2' key={idx}>#{tag.replace('#', '')}</span>
                                           }) : 'N/A' }</span>
                                         </div>
@@ -178,7 +179,7 @@ const Dashboard = () => {
                                                 <h1>Are you sure you want to continue?</h1>
                                                 <div className='flex justify-evenly mt-8'>
                                                   <button className='text-green-500' onClick={() => { 
-                                                    removeMovie(movie._id);
+                                                    dispatch(deleteLibrary(library._id));
                                                   }}>
                                                     Yes
                                                   </button>

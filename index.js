@@ -46,7 +46,7 @@ if(process.env.NODE_ENV === 'dev'){
 
 app.use(express.json());
 
-router.use('/library', libraryRoutes);
+router.use('/libraries', libraryRoutes);
 router.use('/movies', movieRoutes);
 router.use('/users', userRoutes);
 router.use('/upload', uploadRoutes);

@@ -3,9 +3,11 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from "@redux-devtools/extension";
 import { movieCreateReducer, movieReducer, movieUpdateReducer } from "./reducers/movieReducers";
 import { userAdminReducer, userDetailsReducer, userReducer, userRegisterReducer, userUpdateReducer } from "./reducers/userReducers";
+import { libraryCreateReducer, libraryReducer, libraryUpdateReducer } from "./reducers/libraryReducers";
 
 const reducer = combineReducers({
     movies: movieReducer,
+    libraries: libraryReducer,
     user: userReducer,
     userRegister: userRegisterReducer,
     profile: userDetailsReducer,
@@ -15,6 +17,10 @@ const reducer = combineReducers({
         movie: combineReducers({
             create: movieCreateReducer,
             update: movieUpdateReducer
+        }),
+        library: combineReducers({
+            create: libraryCreateReducer,
+            update: libraryUpdateReducer
         })
     })
 });

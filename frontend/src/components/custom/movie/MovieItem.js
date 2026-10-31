@@ -1,7 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { addLibrary } from '../../../store/actions/libraryActions';
+import plus_icon from '../../../assets/svg/plus.svg';
 
 function MovieItem({movie}) {
+    const dispatch = useDispatch();
+
+
   return (
     <div className='flex flex-col w-fit gap-y-8 my-4 items-center' style={{
         width: 'calc(33.33% - 16px)'
@@ -10,6 +16,19 @@ function MovieItem({movie}) {
             maxHeight: '10rem'
         }}>
             <img src={`${movie.images[0]}`} alt='movie_image' width="300" height="90" className="h-fit"></img>
+        </span>
+        <span className='movie-action'>
+            {
+                !movie.added && (
+                    <button className='text-green-500' onClick={() => { 
+                        dispatch(addLibrary({
+                            movie: movie._id
+                        }));
+                    }}>
+                        <img src={plus_icon} alt="plus icon" width="36" />
+                    </button>
+                )
+            }
         </span>
         <span className='movie-details flex flex-col w-11/12'>
             <Link to={`/movie/${movie._id}`}>
