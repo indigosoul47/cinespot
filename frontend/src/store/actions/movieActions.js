@@ -41,11 +41,20 @@ export const fetchTags = () => async (dispatch) => {
     }
 }
 
-export const fetchMovies = (keyword = '', page = '', pSize = '', genre = '') => async (dispatch) => {
+export const fetchMovies = (keyword = '', page = '', pSize = '', genre = '') => async (dispatch, getState) => {
     try {
         dispatch({ type: MOVIES_FETCH_INIT });
 
-        const { data } = await axios.get(`/api/movies?keyword=${keyword}&page=${page}${pSize !== '' ? `&pSize=${pSize}` : ''}&genre=${genre}`);
+        const { userInfo } = getState().user;
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${userInfo.token}`
+            }
+        }
+
+        const { data } = await axios.get(`/api/movies?keyword=${keyword}&page=${page}${pSize !== '' ? `&pSize=${pSize}` : ''}&genre=${genre}`, config);
         
         dispatch({
             type: MOVIES_FETCH_SUCCESS,
@@ -59,11 +68,20 @@ export const fetchMovies = (keyword = '', page = '', pSize = '', genre = '') => 
     }
 }
 
-export const searchMovies = (keyword = '', page = '', pSize = '', genre = '') => async (dispatch) => {
+export const searchMovies = (keyword = '', page = '', pSize = '', genre = '') => async (dispatch, getState) => {
     try {
         dispatch({ type: MOVIES_FETCH_INIT });
 
-        const { data } = await axios.get(`/api/movies/search?keyword=${keyword}&page=${page}${pSize !== '' ? `&pSize=${pSize}` : ''}&genre=${genre}`);
+        const { userInfo } = getState().user;
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${userInfo.token}`
+            }
+        }
+
+        const { data } = await axios.get(`/api/movies/search?keyword=${keyword}&page=${page}${pSize !== '' ? `&pSize=${pSize}` : ''}&genre=${genre}`, config);
         
         dispatch({
             type: MOVIES_FETCH_SUCCESS,
@@ -77,11 +95,20 @@ export const searchMovies = (keyword = '', page = '', pSize = '', genre = '') =>
     }
 }
 
-export const fetchRelated = (keyword = '') => async (dispatch) => {
+export const fetchRelated = (keyword = '') => async (dispatch, getState) => {
     try {
         dispatch({ type: RELATED_MOVIES_INIT });
 
-        const { data } = await axios.get(`/api/movies?keyword=${keyword}&page=1&pSize=3`);
+        const { userInfo } = getState().user;
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${userInfo.token}`
+            }
+        }
+
+        const { data } = await axios.get(`/api/movies?keyword=${keyword}&page=1&pSize=3`, config);
         
         dispatch({
             type: RELATED_MOVIES_SUCCESS,

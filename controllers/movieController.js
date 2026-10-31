@@ -93,17 +93,19 @@ const getMovies = asyncHandler(async (req, res) => {
                 }
             }
         },
-        {
-            $project: {
-                libraries: 0
-            }
-        },
+        // {
+        //     $project: {
+        //         libraries: 0
+        //     }
+        // },
         {
             $skip: +pageSize * (page - 1)
         },{
             $limit: parseInt(pageSize)
         }
     ])
+
+    console.log('Moovies', movies, req.user);
     
     res.json({
         page,

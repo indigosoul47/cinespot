@@ -10,7 +10,7 @@ router.route('/search').get(searchMovies)
 router.route('/:id').get(getMovieById);
 router.route('/:id').delete(protect, deleteMovie);
 router.route('/:id').put(protect, updateMovie);
-router.route('/').get(getMovies);
+router.route('/').get(protect, getMovies);
 router.route('/').post(protect, createMovie);
 
 export default router;
