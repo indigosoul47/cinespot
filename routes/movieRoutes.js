@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.route('/tags').get(getRandTags);
 router.route('/search').get(protect, searchMovies)
-router.route('/:id').get(getMovieById);
+router.route('/:id').get(protect, getMovieById);
 router.route('/:id').delete(protect, deleteMovie);
 router.route('/:id').put(protect, updateMovie);
 router.route('/').get(protect, getMovies);

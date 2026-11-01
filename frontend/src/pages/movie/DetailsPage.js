@@ -8,6 +8,7 @@ import Related from '../../components/custom/Related';
 import Loading from '../../components/main/Loading';
 import ReviewForm from '../../components/custom/movie/ReviewForm';
 import Reviews from '../../components/custom/movie/Reviews';
+import { addLibrary } from '../../store/actions/libraryActions';
 import './DetailsPage.css'
 
 function DetailsPage() {
@@ -25,6 +26,8 @@ function DetailsPage() {
     dispatch(fetchRelated(''));
     dispatch(fetchMovie(params[params.length -1]));
   }, [dispatch, pathname]);
+
+  console.log('MOOOVIE', movie);
 
 
   return (
@@ -56,21 +59,29 @@ function DetailsPage() {
                       <span className='movie-bg'>
                         {/* <img src={card_bd} alt='movie_style' width="350" height="90" className=""></img> */}
                       </span>
-                      <div className='movie-action mt-auto item-center flex justify-end mt-8'>
-                        <span className='btn cursor-pointer flex' onClick={() => { }}>
-                          <span className='btn-icon'>
-                              
-                          </span>
-                          <span className='btn-text text-center text-3xl flex relative' style={{
-                              fontFamily: 'Jacksilver, Arial, serif',
-                          }}>
-                            Add to Favorites
-                            <span className='btn-bd absolute -bottom-4 -z-10'>
-                              {/* <img src={btn_streak} alt='logo' width="150" height="30" className="-mt-4"></img> */}
+                      {
+                        !movie?.added && (
+                          <div className='movie-action mt-auto item-center flex justify-end mt-8'>
+                            <span className='btn cursor-pointer flex' onClick={() => { 
+                              dispatch(addLibrary({
+                                movie: movie._id
+                              }));
+                            }}>
+                              <span className='btn-icon'>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><title>plus</title><g fill="none" stroke="currentColor" stroke-dasharray="16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="16;0"/></path><path stroke-dashoffset="16" d="M12 5v14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.5s" dur="0.5s" to="0"/></path></g></svg> 
+                              </span>
+                              <span className='btn-text text-center text-3xl flex relative' style={{
+                                  fontFamily: 'Jacksilver, Arial, serif',
+                              }}>
+                                Add to Favorites
+                                <span className='btn-bd absolute -bottom-4 -z-10'>
+                                  {/* <img src={btn_streak} alt='logo' width="150" height="30" className="-mt-4"></img> */}
+                                </span>
+                              </span>
                             </span>
-                          </span>
-                        </span>
-                      </div>          
+                          </div>
+                        )
+                      }          
                     </span>
               </span>
             </div>

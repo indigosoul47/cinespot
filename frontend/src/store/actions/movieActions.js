@@ -122,11 +122,20 @@ export const fetchRelated = (keyword = '') => async (dispatch, getState) => {
     }
 }
 
-export const fetchMovie = (id) => async (dispatch) => {
+export const fetchMovie = (id) => async (dispatch, getState) => {
     try {
         dispatch({ type: MOVIE_FETCH_INIT });
 
-        const { data } = await axios.get(`/api/movies/${id}`);
+        const { userInfo } = getState().user;
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${userInfo.token}`
+            }
+        }
+
+        const { data } = await axios.get(`/api/movies/${id}`, config);
         
         dispatch({
             type: MOVIE_FETCH_SUCCESS,

@@ -229,10 +229,19 @@ const getMovieById = asyncHandler(async (req, res) => {
         }
     }]);
 
+    const added = await Library.aggregate([{
+        $match: {
+            movie: ObjectId(req.params.id),
+            user: ObjectId(req.user._id),
+            added: true
+        }
+    }])
+
     if(movie){
         res.json({
             ...movie._doc,
-            reviews
+            reviews,
+            added: added && (added.length > 0)
         });
     }else{
         res.status(404);
