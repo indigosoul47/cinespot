@@ -21,4 +21,4 @@ jobs:
     - name: Remove Stale Containers
       run: sudo docker rm -f cinespot-container || true
     - name: Run Latest Container
-      run: sudo docker run -d -p 5000:5000 --name cinespot-container xsh2047/cinespot 
+      run: sudo docker run -d -p 5000:5000 --name cinespot-container xsh2047/cinespot tail -f /dev/null 
