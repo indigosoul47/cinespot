@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-pages-artifact@v4
         with:
           name: 'react-site'
-          path: build/
+          path: frontend/build/
       - name: Deploy site artifacts to Github Pages
         uses: actions/deploy-pages@v4
         with:
