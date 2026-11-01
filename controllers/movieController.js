@@ -53,17 +53,27 @@ const getMovies = asyncHandler(async (req, res) => {
         }
     }: {};
 
-    if(req.query.tags){
-        keyword.tags = {
-            $all: req.query.tags.split(',').map(tag => {
-                return tag[0] === '#' ? tag.slice(1) : tag;
-            })
-        }
-    }
-
     const movies = await Movie.aggregate([ 
         {
-            $match: { ...keyword}
+            $match: { 
+                $or: [
+                    {'name': {
+                    $regex: req.query.keyword,
+                    $options: 'i'
+                }},
+                    {'cast': {
+                    $regex: req.query.keyword,
+                    $options: 'i'
+                }},
+                    {'director': {
+                    $regex: req.query.keyword,
+                    $options: 'i'
+                }},
+                    {'genre': {
+                    $regex: req.query.keyword,
+                    $options: 'i'
+                }}]
+            }
         },
         {
             $lookup: {
