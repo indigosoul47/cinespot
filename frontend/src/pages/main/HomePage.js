@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import NewsSection from '../../components/custom/news/NewsSection'
 import Search from '../../components/main/Search'
-import SuggestionBlock from '../../components/custom/SuggestionBlock'
-import TagPool from '../../components/custom/TagPool'
 import Heading from '../../components/main/Heading'
 import Layout from '../../components/layouts/Layout'
 import Movies from '../../components/custom/movie/Movies'
@@ -15,7 +12,7 @@ const HomePage = () => {
 
   const { search } = useLocation();
 
-  const [ searchWord, setSearchWord ] = useState('');
+  // const [ searchWord, setSearchWord ] = useState('');
 
   const keywordQuery = search ? search.split('?')[1].split('&').filter(q => q.startsWith('keyword'))[0]: null;
       
@@ -37,10 +34,10 @@ const HomePage = () => {
 
       console.log('Keyword', keyword)
   
-      setSearchWord(keyword);
+      // setSearchWord(keyword);
   
       dispatch(fetchMovies(keyword, page, sizeStr, genStr));
-    }, [dispatch, search]);
+    }, [dispatch, search, keyword, page, sizeStr,]);
 
   return (
       <>

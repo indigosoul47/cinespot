@@ -2,12 +2,10 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../../components/layouts/Layout';
 import Loading from '../../components/main/Loading';
-import { Tab, Popover, Dialog } from '@headlessui/react';
+import { Tab, Popover } from '@headlessui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers, updateUser } from '../../store/actions/userActions';
 import Search from '../../components/main/Search';
-import { createMovie, deleteMovie, fetchMovie, fetchMovies, updateMovie } from '../../store/actions/movieActions';
-import { MOVIE_RESET_REQUEST } from '../../store/constants/movieConstants';
 import { usePopper } from 'react-popper';
 import Tooltip from '../../components/main/Tooltip';
 import { fetchLibraries, deleteLibrary } from '../../store/actions/libraryActions';
@@ -16,7 +14,7 @@ const Dashboard = () => {
     const dispatch = useDispatch();
 
     const { users, loading: usersLoading } = useSelector(state => state.admin.user);
-    const { libraries, library, loading: librariesLoading } = useSelector(state => state.libraries);
+    const { libraries, loading: librariesLoading } = useSelector(state => state.libraries);
     
     let [referenceElement, setReferenceElement] = useState()
     let [popperElement, setPopperElement] = useState()
@@ -31,10 +29,6 @@ const Dashboard = () => {
 
     const deleteUser = (id) => {
       dispatch(deleteUser(id));
-    } 
-
-    const removeMovie = (id) => {
-      dispatch(deleteMovie(id));
     }
     
     return (

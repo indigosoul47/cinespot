@@ -17,9 +17,7 @@ function ListingsPage() {
   const movieStore = useSelector(state => state.movies);
   const { loading, error, movies, page, pages, total, loadingRelated, related } = movieStore;
 
-  const [ searchWord, setSearchWord ] = useState('');
-  const [ category, setCategory ] = useState('');
-  const [ tags, setTags ] = useState('');
+  const [ searchWord ] = useState('');
 
   useEffect(() => {    
     const keywordQuery = search ? search.split('?')[1].split('&').filter(q => q.startsWith('keyword'))[0]: null;

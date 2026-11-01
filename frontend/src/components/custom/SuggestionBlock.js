@@ -2,11 +2,9 @@ import React from 'react'
 import Chip from '../main/Chip'
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 function SuggestionBlock() {
-    const dispatch = useDispatch();
-
     const movieStore = useSelector(state => state.movies);
 
     const { related } = movieStore ? movieStore : {};

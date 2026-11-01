@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import MovieItem from './movie/MovieItem';
 import Loading from '../main/Loading';
 

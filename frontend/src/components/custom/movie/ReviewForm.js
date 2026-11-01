@@ -1,7 +1,5 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Loader from '../../../animations/Loading/Loader';
-import Loading from '../../main/Loading';
 import { useDispatch } from 'react-redux';
 import { MOVIE_CREATE_FAIL } from '../../../store/constants/movieConstants';
 import { updateLibrary } from '../../../store/actions/libraryActions';
@@ -13,8 +11,6 @@ const ReviewForm = ({ onSubmitComplete, movie = {}, loading }) => {
   const [rating, setRating] = useState('');
   const [comment, setComment] = useState('');
  
-  const [uploading, setUploading] = useState(false);
-
   const handleFormSubmit = (event) => {
     event.preventDefault();
 

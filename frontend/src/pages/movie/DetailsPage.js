@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom';
 import Heading from '../../components/main/Heading';
 import Layout from '../../components/layouts/Layout';
 import { fetchMovie, fetchRelated } from '../../store/actions/movieActions';
-import Related from '../../components/custom/Related';
 import Loading from '../../components/main/Loading';
 import ReviewForm from '../../components/custom/movie/ReviewForm';
 import Reviews from '../../components/custom/movie/Reviews';
@@ -15,7 +14,7 @@ function DetailsPage() {
   const dispatch = useDispatch();
 
   const movieStore = useSelector(state => state.movies);
-  const { loading: loadingMovie, movie, error, loadingRelated, related } = movieStore;
+  const { loading: loadingMovie, movie } = movieStore;
 
 
   const { pathname } = useLocation();

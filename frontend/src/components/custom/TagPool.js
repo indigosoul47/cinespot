@@ -13,7 +13,7 @@ function TagPool() {
 
   useEffect(()=>{
     dispatch(fetchTags());
-  }, [])
+  }, [dispatch])
 
   console.log('TAGS', tags);
 

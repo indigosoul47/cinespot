@@ -6,9 +6,7 @@ import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import ProfilePage from './pages/main/ProfilePage';
 import ListingsPage from './pages/movie/ListingsPage';
-import { useEffect, useState } from 'react';
 import Dashboard from './pages/main/Dashboard';
-import AdminRoutes from './utils/components/AdminRoutes';
 import './utils/interceptors/axios';
 
 function App() {

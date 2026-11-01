@@ -6,7 +6,7 @@ function Search({main = true, placeholder = 'Search'}) {
   const { search } = useLocation();
 
   const [ keyword, setKeyword ] = useState('');
-  const [ category, setCategory ] = useState('');
+  const [ category ] = useState('');
   const [ tags, setTags ] = useState('');
 
   const submitHandler = (e) => {
@@ -28,11 +28,7 @@ function Search({main = true, placeholder = 'Search'}) {
     const keywordQuery = search ? search.split('?')[1].split('&').filter(q => q.startsWith('keyword'))[0]: null;
     
     const keywordStr = keywordQuery ? keywordQuery.split('=')[1] : '';
-
-    const catQuery = search ? search.split('?')[1].split('&').filter(q => q.startsWith('category'))[0]: null;
     
-    const catStr = catQuery ? catQuery.split('=')[1] : '';
-
     const tagQuery = search ? search.split('?')[1].split('&').filter(q => q.startsWith('tags'))[0]: null;
     
     const tagStr = tagQuery ? tagQuery.split('=')[1] : '';
