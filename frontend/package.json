@@ -3,7 +3,7 @@
   "proxy": "http://localhost:5000",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://filmspot.io",
+  "homepage": "https://indigosoul47.github.io/cinespot",
   "dependencies": {
     "@headlessui/react": "^1.6.6",
     "@heroicons/react": "^1.0.6",
