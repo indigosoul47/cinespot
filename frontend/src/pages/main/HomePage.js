@@ -30,9 +30,6 @@ const HomePage = () => {
       const genQuery = search ? search.split('?')[1].split('&').filter(q => q.startsWith('genre'))[0]: null;
       
       const genStr = genQuery ? genQuery.split('=')[1] : '';
-
-
-      console.log('Keyword', keyword)
   
       // setSearchWord(keyword);
   

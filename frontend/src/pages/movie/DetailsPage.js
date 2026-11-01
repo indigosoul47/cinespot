@@ -26,9 +26,6 @@ function DetailsPage() {
     dispatch(fetchMovie(params[params.length -1]));
   }, [dispatch, pathname]);
 
-  console.log('MOOOVIE', movie);
-
-
   return (
     <Layout isMain={false}>
       {
