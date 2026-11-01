@@ -8,7 +8,7 @@ on:
     
 jobs:
 
-  build:
+  deploy:
     runs-on: [aws-ec2]
     env: 
       EC2_HOST: ${{secrets.EC2_HOST}}
@@ -22,3 +22,5 @@ jobs:
       run: sudo docker rm -f cinespot-container || true
     - name: Run Latest Container
       run: sudo docker run -d -p 5000:5000 --name cinespot-container xsh2047/cinespot tail -f /dev/null 
+    - name: Start App
+      run: sudo docker exec -d cinespot-container node index.js
