@@ -17,7 +17,10 @@ import {
     LIBRARY_RESET_REQUEST,
     LIBRARIES_TAG_FETCH_FAIL,
     LIBRARIES_TAG_FETCH_INIT,
-    LIBRARIES_TAG_FETCH_SUCCESS
+    LIBRARIES_TAG_FETCH_SUCCESS,
+    REVIEW_DELETE_REQUEST,
+    REVIEW_DELETE_SUCCESS,
+    REVIEW_DELETE_FAIL,
 } from '../constants/libraryConstants.js';
 
 export const libraryReducer = (state = {}, action) => {
@@ -45,6 +48,12 @@ export const libraryReducer = (state = {}, action) => {
         case LIBRARY_DELETE_SUCCESS:
             return { ...state, loading: false, libraries: state.libraries.filter(library => library._id !== action.payload) };
         case LIBRARY_DELETE_FAIL:
+            return { ...state, loading: false, error: action.payload };
+        case REVIEW_DELETE_REQUEST:
+            return { loading: true, ...state };
+        case REVIEW_DELETE_SUCCESS:
+            return { ...state, loading: false, libraries: state.libraries.filter(library => library._id !== action.payload) };
+        case REVIEW_DELETE_FAIL:
             return { ...state, loading: false, error: action.payload };
         case LIBRARY_RESET_REQUEST:
             return { ...state, library: null }

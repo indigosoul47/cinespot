@@ -14,7 +14,10 @@ import {
     LIBRARY_CREATE_SUCCESS,
     LIBRARY_CREATE_FAIL,
     LIBRARY_UPDATE_SUCCESS,
-    LIBRARY_UPDATE_FAIL
+    LIBRARY_UPDATE_FAIL,
+    REVIEW_DELETE_REQUEST,
+    REVIEW_DELETE_SUCCESS,
+    REVIEW_DELETE_FAIL,
 } from '../constants/libraryConstants.js';
 
 export const fetchLibraries = (keyword = '', page = '', pSize = '', genre = '') => async (dispatch) => {
@@ -130,6 +133,33 @@ export const updateLibrary = (id, updates) => async (dispatch, getState) => {
     }catch (error){
         dispatch({
             type: LIBRARY_UPDATE_FAIL,
+            payload: error.response && error.response.data.message ? error.response.data.message : error.message
+        })
+    }
+}
+
+export const deleteReview = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: REVIEW_DELETE_REQUEST });
+
+        const { userInfo } = getState().user;
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${userInfo.token}`
+            }
+        }
+
+        await axios.delete(`/api/libraries/review/${id}`, config);
+        
+        dispatch({
+            type: REVIEW_DELETE_SUCCESS,
+            payload: id
+        });
+    }catch (error){
+        dispatch({
+            type: REVIEW_DELETE_FAIL,
             payload: error.response && error.response.data.message ? error.response.data.message : error.message
         })
     }

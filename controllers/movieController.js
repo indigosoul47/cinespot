@@ -201,7 +201,8 @@ const getMovieById = asyncHandler(async (req, res) => {
 
     const reviews = await Library.aggregate([{
         $match : {
-            movie: ObjectId(req.params.id)
+            movie: ObjectId(req.params.id),
+            $or: [ {rating: { $exists: true }}, {comment: { $exists: true }} ]
         }
     }, {
         $lookup:{
@@ -214,16 +215,11 @@ const getMovieById = asyncHandler(async (req, res) => {
         $unwind: '$user'
     }, {
         $project: {
-            'movie': 0,
             'added': 0
         }
     }]);
 
     if(movie){
-        console.log('MOOOVE', {
-            ...movie._doc,
-            reviews
-        });
         res.json({
             ...movie._doc,
             reviews

@@ -163,10 +163,30 @@ const deleteLibrary = asyncHandler(async (req, res) => {
     }
 });
 
+const deleteReview = asyncHandler(async (req, res) => {
+     const userLib = await Library.find({
+        movie: req.params.id,
+        user: req.user._id
+    })
+
+    if(userLib && userLib[0]){
+         const library = await Library.findById(userLib[0]._id);
+
+        library.rating = undefined;
+        library.comment = undefined;
+        
+        res.json(await library.save());
+    }else{
+        res.status(404);
+        throw new Error('Library not found'); 
+    }
+});
+
 export {
     getLibraries,
     getLibraryById,
     deleteLibrary,
     updateLibrary,
-    createLibrary
+    createLibrary,
+    deleteReview
 }

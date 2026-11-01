@@ -5,7 +5,7 @@ import icon_yt from '../../assets/svg/icon-youtube.svg';
 import icon_wa from '../../assets/svg/icon-whatsapp.svg';
 import icon_tw from '../../assets/svg/icon-twitter.svg';
 import footer_banner from '../../assets/svg/backdrop-5.svg';
-import logo_minimal from '../../assets/svg/logo-minimal.svg';
+import logo from '../../assets/png/logo.png';
 
 const Footer = () => {
   const links = [
@@ -53,7 +53,7 @@ const Footer = () => {
   ]
   return <footer className='row flex m-auto'>
           <div className='footer-bd mt-20'>
-            <img src={logo_minimal} alt='logo' width="360" height="30" className="d-inline-block align-top"></img>
+            <img src={logo} alt='logo' width="360" height="30" className="d-inline-block align-top"></img>
           </div>
           <div className='row flex flex-col'>
             <span className='link-cols flex m-auto pt-32'>
