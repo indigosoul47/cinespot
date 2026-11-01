@@ -50,7 +50,7 @@ const ReviewForm = ({ onSubmitComplete, movie = {}, loading }) => {
   }, [movie]);
 
   return loading ? <Loader /> : (
-    <form onSubmit={(e) => { handleFormSubmit(e) }} className="mt-4 w-full mb-10">
+    <form onSubmit={(e) => { handleFormSubmit(e) }} className="mt-4 w-full mb-10 px-16">
       {/* { error && <h1 className='text-lg text-orange-500'>{error}</h1> } */}
       <div className='flex p-4 rounded-lg my-10' style={{
         background: '#E5E5E5'

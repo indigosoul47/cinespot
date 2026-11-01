@@ -8,6 +8,7 @@ import Related from '../../components/custom/Related';
 import Loading from '../../components/main/Loading';
 import ReviewForm from '../../components/custom/movie/ReviewForm';
 import Reviews from '../../components/custom/movie/Reviews';
+import './DetailsPage.css'
 
 function DetailsPage() {
   const dispatch = useDispatch();
@@ -92,11 +93,10 @@ function DetailsPage() {
         ))
       }
       <ReviewForm movie={movie}/>  
-      <Reviews reviews={movie?.reviews}/>
       <Heading alt>
-        Suggested
+        Reviews
       </Heading>
-      <Related error={error} movies={related} loading={loadingRelated}/>
+      <Reviews reviews={movie?.reviews}/>
     </Layout>
   )
 }

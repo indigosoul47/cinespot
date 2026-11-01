@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { addLibrary } from '../../../store/actions/libraryActions';
 import plus_icon from '../../../assets/svg/plus.svg';
+import './MovieItem.css';
 
 function MovieItem({movie}) {
     const dispatch = useDispatch();
 
 
   return (
-    <div className='flex flex-col w-fit gap-y-8 my-4 items-center' style={{
+    <div className='movie-item flex flex-col w-fit gap-y-8 my-4 items-center' style={{
         width: 'calc(33.33% - 16px)'
     }}>
         <span className='movie-image w-fit rounded overflow-hidden flex items-center cursor-pointer' style={{
@@ -20,7 +21,7 @@ function MovieItem({movie}) {
         <span className='movie-action'>
             {
                 movie.added ? '' : (
-                    <button className='text-green-500' onClick={() => { 
+                    <button className='text-white bg-red-500 rounded-md' onClick={() => { 
                         dispatch(addLibrary({
                             movie: movie._id
                         }));

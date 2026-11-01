@@ -5,8 +5,9 @@ import MovieItem from './MovieItem';
 import arrow_l from '../../../assets/svg/arrow-l.svg';
 import arrow_r from '../../../assets/svg/arrow-r.svg';
 import page_ind from '../../../assets/svg/page-ind.svg';
+import './Movies.css';
 
-function Movies({ pages, page, total, keyword }) {
+function Movies({ pages = 3, page = 1, total, keyword }) {
 
   const size = 6;
     
@@ -15,7 +16,7 @@ function Movies({ pages, page, total, keyword }) {
 
   return (
     <div>
-        <div className='store flex flex-wrap my-8 mx-16 gap-x-4'>
+        <div className='movie-list flex flex-wrap my-8 mx-16 gap-x-4 p-4'>
             {
                 movies?.map(movie => <MovieItem key={movie._id} movie={movie}/>)
             }
@@ -24,7 +25,7 @@ function Movies({ pages, page, total, keyword }) {
             fontFamily: 'Jacksilver, Arial, serif',
         }}>
             <span className='summary text-right'>
-                { `Showing ${ (size * ( page - 1 )) + 1 } - ${size * page} of ${total} results` }
+                { `Showing ${ (size * ( page - 1 )) + 1 } - ${size * page}` }
             </span>
             <span className='pages flex justify-center gap-x-8 items-start mt-8 text-xl'>
                 {

@@ -21,15 +21,15 @@ const HomePage = () => {
       
   const keyword = keywordQuery && keywordQuery.split('=')[1] ? keywordQuery.split('=')[1] : '';
 
-  useEffect(() => {    
-      const pageQuery = search ? search.split('?')[1].split('&').filter(q => q.startsWith('page'))[0]: null;
+  const pageQuery = search ? search.split('?')[1].split('&').filter(q => q.startsWith('page'))[0]: null;
       
-      const page = pageQuery ? pageQuery.split('=')[1] : '';
-  
-      const sizeQuery = search ? search.split('?')[1].split('&').filter(q => q.startsWith('pSize'))[0]: null;
-      
-      const sizeStr = sizeQuery ? sizeQuery.split('=')[1] : '';
+  const page = pageQuery ? pageQuery.split('=')[1] : '1';
 
+  const sizeQuery = search ? search.split('?')[1].split('&').filter(q => q.startsWith('pSize'))[0]: null;
+  
+  const sizeStr = sizeQuery ? sizeQuery.split('=')[1] : '6';
+  
+  useEffect(() => {    
       const genQuery = search ? search.split('?')[1].split('&').filter(q => q.startsWith('genre'))[0]: null;
       
       const genStr = genQuery ? genQuery.split('=')[1] : '';
@@ -48,13 +48,10 @@ const HomePage = () => {
           <Search/>
           {/* <ChoiceWizard/> */}
           {/* <Preview/> */}
-          <Movies keyword={keyword}/>
+          <Movies keyword={keyword} page={Number(page)} total={Number(sizeStr)}/>
           <Heading>
             Recommended
           </Heading>
-          <SuggestionBlock/>
-          <TagPool/>
-          <NewsSection/>
         </Layout>
       </>
   )

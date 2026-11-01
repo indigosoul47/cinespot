@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { addLibrary } from '../../../store/actions/libraryActions';
+import './Reviews.css'
 
 function Reviews({reviews = []}) {
     const dispatch = useDispatch();
@@ -13,9 +14,7 @@ function Reviews({reviews = []}) {
   return (<>
     {
         reviews.map(review =>
-            <div key={review._id} className='review flex flex-col w-fit gap-y-8 my-4 items-center' style={{
-                width: 'calc(33.33% - 16px)'
-            }}>
+            <div key={review._id} className='review flex w-full gap-y-8 my-4 px-16 justify-between items-center'>
                 <div className='review-info'>
                     <div>{ review.user?.name }</div>
                     <div>{ review.comment }</div>

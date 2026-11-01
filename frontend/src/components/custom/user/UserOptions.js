@@ -20,11 +20,11 @@ const UserOptions = ({ user }) => {
     }}>
         <div>
           <Menu.Button className="inline-flex w-full justify-center rounded-2xl bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 items-center" style={{
-            background: '#D8D8D8'
+            background: '#cf0f0f'
           }}>
             { user.name }
             <span className='ml-2 flex cursor-pointer'>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#1E748C" className="w-6 h-6">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ffffff" className="w-6 h-6">
                     <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clipRule="evenodd" />
                 </svg>
             </span>
@@ -46,7 +46,7 @@ const UserOptions = ({ user }) => {
                   <Link to="/profile">
                     <button
                       className={`${
-                        active ? 'bg-sky-500 text-white' : 'text-gray-900'
+                        active ? 'bg-red-500 text-white' : 'text-gray-900'
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                     >
                       Profile
@@ -59,7 +59,7 @@ const UserOptions = ({ user }) => {
                   <Link to='/dashboard'>
                     <button
                       className={`${
-                        active ? 'bg-sky-500 text-white' : 'text-gray-900'
+                        active ? 'bg-red-500 text-white' : 'text-gray-900'
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                     >
                       Dashboard
@@ -73,7 +73,7 @@ const UserOptions = ({ user }) => {
                 {({ active }) => (
                   <button
                     className={`${
-                      active ? 'bg-sky-500 text-white' : 'text-gray-900'
+                      active ? 'bg-red-500 text-white' : 'text-gray-900'
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                     onClick={() => handleLogout()}
                   >
