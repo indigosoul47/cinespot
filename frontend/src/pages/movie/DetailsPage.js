@@ -6,6 +6,8 @@ import Layout from '../../components/layouts/Layout';
 import { fetchMovie, fetchRelated } from '../../store/actions/movieActions';
 import Related from '../../components/custom/Related';
 import Loading from '../../components/main/Loading';
+import ReviewForm from '../../components/custom/movie/ReviewForm';
+import Reviews from '../../components/custom/movie/Reviews';
 
 function DetailsPage() {
   const dispatch = useDispatch();
@@ -89,6 +91,8 @@ function DetailsPage() {
           </div>
         ))
       }
+      <ReviewForm movie={movie}/>  
+      <Reviews reviews={movie?.reviews}/>
       <Heading alt>
         Suggested
       </Heading>

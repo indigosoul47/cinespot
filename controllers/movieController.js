@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import Movie from '../models/movie.js';
+import Library from '../models/library.js';
 import mongoose from "mongoose";
 
 const ObjectId = mongoose.Types.ObjectId;
@@ -105,7 +106,7 @@ const getMovies = asyncHandler(async (req, res) => {
         }
     ])
 
-    console.log('Moovies', movies, req.user);
+    // console.log('Moovies', movies, req.user);
     
     res.json({
         page,
@@ -175,11 +176,11 @@ const searchMovies = asyncHandler(async (req, res) => {
                 }
             }
         },
-        {
-            $project: {
-                libraries: 0
-            }
-        },
+        // {
+        //     $project: {
+        //         libraries: 0
+        //     }
+        // },
         {
             $skip: +pageSize * (page - 1)
         },{
@@ -198,8 +199,35 @@ const searchMovies = asyncHandler(async (req, res) => {
 const getMovieById = asyncHandler(async (req, res) => {
     const movie = await Movie.findById(req.params.id);
 
+    const reviews = await Library.aggregate([{
+        $match : {
+            movie: ObjectId(req.params.id)
+        }
+    }, {
+        $lookup:{
+            from: 'users',
+            localField: 'user',
+            foreignField: '_id',
+            as: 'user'
+        }
+    }, {
+        $unwind: '$user'
+    }, {
+        $project: {
+            'movie': 0,
+            'added': 0
+        }
+    }]);
+
     if(movie){
-        res.json(movie);
+        console.log('MOOOVE', {
+            ...movie._doc,
+            reviews
+        });
+        res.json({
+            ...movie._doc,
+            reviews
+        });
     }else{
         res.status(404);
         throw new Error('Movie not found');

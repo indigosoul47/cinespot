@@ -108,6 +108,7 @@ export const addLibrary = (movie) => async (dispatch, getState) => {
 }
 
 export const updateLibrary = (id, updates) => async (dispatch, getState) => {
+    console.log('Update Hit');
     try {
         dispatch({ type: LIBRARY_UPDATE_REQUEST });
 
@@ -120,7 +121,7 @@ export const updateLibrary = (id, updates) => async (dispatch, getState) => {
             }
         }
 
-        const { data } = await axios.put(`/api/movies/${id}`, updates, config);
+        const { data } = await axios.put(`/api/libraries/${id}`, updates, config);
         
         dispatch({
             type: LIBRARY_UPDATE_SUCCESS,

@@ -116,26 +116,33 @@ const updateLibrary = asyncHandler(async (req, res) => {
         comment
     } = req.body;
 
-    const library = await Library.findById(req.params.id);
+    const userLib = await Library.find({
+        movie: req.params.id,
+        user: req.user._id
+    })
 
-    if(library){
-        if(library.user.equals(req.user._id)){
-            if(rating){
-                library.rating = rating;
-            }
+    if(userLib && userLib[0]){
+        const library = await Library.findById(userLib[0]._id);
 
-            if(comment){
-                library.comment = comment;
-            }
-            
-            res.json(await library.save());
-        }else{
-            res.status(401);
-            throw new Error('Invalid Permission: User');
+        if(rating){
+            library.rating = rating;
         }
+
+        if(comment){
+            library.comment = comment;
+        }
+        
+        res.json(await library.save());
     }else{
-        res.status(404);
-        throw new Error('Library not found');
+        const newLib = new Library({
+            movie: req.params.id,
+            user: req.user._id,
+            rating,
+            comment
+        });
+
+        const created = await newLib.save();
+        res.status(201).json({ library: created });  
     }
 });
 
