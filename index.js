@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 // Define allowed origins
-const allowedOrigins = ['http://localhost:3000', 'https://indigosoul47.github.io'];
+const allowedOrigins = ['http://localhost:3000', 'https://indigosoul47.github.io', 'http://indigosoul47.github.io'];
 
 const corsOptions = {
   origin: function (origin, callback) {

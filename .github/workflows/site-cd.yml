@@ -14,7 +14,7 @@ permissions:
 jobs:
 
   deploy-site:
-    runs-on: ubuntu-latest
+    runs-on: [aws-ec2]
     defaults:
       run:
         working-directory: ./frontend
@@ -30,15 +30,7 @@ jobs:
         run: npm ci
       - name: Build Project
         run: npm run build
-      - name: Upload site artifacts
-        uses: actions/upload-pages-artifact@v4
-        with:
-          name: 'react-site'
-          path: frontend/build/
-      - name: Deploy site artifacts to Github Pages
-        uses: actions/deploy-pages@v5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          artifact_name: 'react-site'
-        
-         
+      - name: Clear contents of /var/www/html
+        run: sudo rm -rf /var/www/html/*
+      - name: Copy build folder to /var/www/html
+        run: sudo cp -r build/* /var/www/html
