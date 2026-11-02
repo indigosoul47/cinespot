@@ -2,7 +2,7 @@ name: Site CD
 
 on:
   workflow_run:
-    workflows: ['Docker CI']
+    workflows: ['Site CI']
     types:
       - completed
 
@@ -15,17 +15,11 @@ jobs:
         working-directory: ./frontend
 
     steps:
-      - name: Checkout Source
-        uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - name: Install Dependencies
-        run: npm ci --no-audit --no-progress
-      - name: Build Project
-        run: npm run build
-      - name: Clear contents of /var/www/html
-        run: sudo rm -rf /var/www/html/*
-      - name: Copy build folder to /var/www/html
-        run: sudo cp -r build/* /var/www/html
+      - name: Pull Docker image
+        run: sudo docker pull xsh2047/cinespot-app:latest
+      - name: Remove Stale Containers
+        run: sudo docker rm -f cinespot-app-container || true
+      - name: Run Latest Container
+        run: sudo docker run -d -p 5000:5000 --name cinespot-app-container xsh2047/cinespot-app tail -f /dev/null 
+      - name: Start App
+        run: sudo docker exec -d cinespot-app-container node index.js
