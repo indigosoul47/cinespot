@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: 20
       - name: Install Dependencies
-        run: npm ci
+        run: npm ci --no-audit --no-progress
       - name: Build Project
         run: npm run build
       - name: Clear contents of /var/www/html
