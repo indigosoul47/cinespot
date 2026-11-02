@@ -107,6 +107,12 @@ $ tar xzf ./actions-runner-linux-x64-2.338.0.tar.gz
 $ ./config.sh --url https://github.com/indigosoul47/cinespot --token BMIULPT6KEXKNV7HHMICGADK4SZPECopied!# Last step, run it!
 $ ./run.sh
 
+or
+
+Setup service
+sudo ./svc.sh install
+sudo ./svc.sh start
+
 ## Install Docker
 sudo apt update
 sudo apt install ca-certificates curl
