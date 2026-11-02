@@ -20,6 +20,6 @@ jobs:
       - name: Remove Stale Containers
         run: sudo docker rm -f cinespot-app-container || true
       - name: Run Latest Container
-        run: sudo docker run -d -p 5000:5000 --name cinespot-app-container xsh2047/cinespot-app tail -f /dev/null 
+        run: sudo docker run -d -p 3000:3000 --name cinespot-app-container xsh2047/cinespot-app tail -f /dev/null 
       - name: Start App
         run: sudo docker exec -d cinespot-app-container node index.js
