@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://ec2-18-218-49-253.us-east-2.compute.amazonaws.com';
+axios.defaults.baseURL = 'https://localhost:5000';
 // axios.defaults.withCredentials = true;
 
 let refresh = false;

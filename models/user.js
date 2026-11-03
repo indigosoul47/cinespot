@@ -21,10 +21,6 @@ const userSchema = mongoose.Schema({
     isAdmin: {
         type: Boolean,
         required: true
-    },
-    defaultDomain:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Domain'
     }
 }, {
     timestamps: true
